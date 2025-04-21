@@ -1,10 +1,10 @@
-FROM python:3.10-alpine
+FROM python:2.7-alpine
 
 WORKDIR /app
 
 COPY requirements.txt .
 
-RUN pip3 install --update pip && pip3 install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
@@ -14,6 +14,4 @@ USER flaskuser
 
 EXPOSE 3000
 
-ENTRYPOINT ["python3"]
-
-CMD ["hello.py"]
+CMD ["python","hello.py"]

@@ -20,7 +20,7 @@ services:
     ports: 
       - 5000:5000
     volumes:
-      - ./backend:/app
+      - ./:/app
       - /app/node_modules
     environment:
       NODE_ENV: development
@@ -31,7 +31,7 @@ services:
     depends_on:
       - mongo    
   mongo:
-    image: mongo:4.2.0
+    image: mongo:7.0
     volumes:
       - mongo_data:/data/db
     expose:

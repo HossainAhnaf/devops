@@ -1,0 +1,18 @@
+services:
+  frontend:
+    build:
+      context: ./public
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./public:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+  backend:
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true

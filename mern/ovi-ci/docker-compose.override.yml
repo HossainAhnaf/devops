@@ -1,0 +1,14 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    environment:
+      - PUBLIC_URL=http://localhost:3000
+      - CHOKIDAR_USEPOLLING=true
+      - NODE_ENV=development
+    ports: 
+      - 3000:3000
+    volumes:
+      - ./:/app
+      - /app/node_modules

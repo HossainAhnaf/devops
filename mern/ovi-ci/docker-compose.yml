@@ -1,0 +1,8 @@
+services:
+  frontend:
+    build: .
+    environment:
+      - PUBLIC_URL=http://localhost:3000
+      - NODE_ENV=production
+    ports: 
+      - 3000:80

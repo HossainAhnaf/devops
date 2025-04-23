@@ -1,11 +1,29 @@
 services:
-  web:
+  web1:
     build: 
       context: .
       dockerfile: Dockerfile.dev
     ports:
-      - 3000:3000
+      - 3001:3000
     volumes:
       - ./:/app
     environment:
-      - CHOKIDAR_USEPOLLING=true  
+      - FLASK_ENV=development
+  web2:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3002:3000
+    volumes:
+      - ./:/app
+    environment:
+      - FLASK_ENV=development
+      
+  nginx:
+    build: nginx
+    ports:
+      - 80:80
+    depends_on:
+      - web1
+      - web2    

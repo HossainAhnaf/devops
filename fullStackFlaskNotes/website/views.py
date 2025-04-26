@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from .models import Note
 from . import db
 import json
-import platform  # 👈 Added for OS name
+import socket  # already mentioned earlier
 
 views = Blueprint('views', __name__)
 
@@ -20,8 +20,8 @@ def home():
             db.session.commit()
             flash('Note added', category='success')
 
-    os_name = platform.system()  # 👈 Added line
-    return render_template("home.html", user=current_user, os_name=os_name)  # 👈 Passed to template
+    hostname = socket.gethostname()  # <-- Use this instead
+    return render_template("home.html", user=current_user, hostname=hostname)
 
 @views.route('/delete-note', methods=['POST'])
 def delete_note():

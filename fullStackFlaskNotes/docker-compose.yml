@@ -1,11 +1,13 @@
 services:
   web1:
+    hostname: web1
     build: .
     ports:
       - 3001:3000
     environment:
       - FLASK_ENV=production
   web2:
+    hostname: web2
     build: .
     ports:
       - 3002:3000

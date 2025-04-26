@@ -5,6 +5,8 @@ import secrets
 import re
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+import platform  # 👈 Added for OS name
+
 
 #connecting to mongodb atlas
 import pymongo
@@ -99,10 +101,11 @@ def error_404():
 @app.route('/')
 def home():
     user = session.get('user')
+    os_name = platform.system()  # 👈 Added line
     if user:
         return render_template('index.html', user=user)
     else:
-        return render_template('landing_page.html')
+        return render_template('landing_page.html', os_name=os_name)
         
 
         
@@ -772,4 +775,4 @@ def analyse():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=3000)

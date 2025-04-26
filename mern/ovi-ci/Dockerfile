@@ -15,8 +15,8 @@ FROM nginx:1.26.3-alpine-slim
 
 COPY --from=builder /app/build /usr/share/nginx/html
 
-COPY nginx/nginx.conf /etc/nginx/nginx.conf
+#COPY nginx/nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 3000
+EXPOSE 80
 
 CMD ["nginx","-g","daemon off;"]

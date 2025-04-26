@@ -5,14 +5,14 @@ services:
       - NODE_ENV=production
       - REACT_APP_CONTAINER_NAME=web1
     ports: 
-      - 3001:3000
+      - 3001:80
   web2:
     build: .
     environment:
       - NODE_ENV=production
       - REACT_APP_CONTAINER_NAME=web2
     ports: 
-      - 3002:3000
+      - 3002:80
   nginx:
     build: nginx
     ports:

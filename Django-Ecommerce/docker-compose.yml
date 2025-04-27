@@ -1,0 +1,10 @@
+services:
+  web:
+    build: .
+    environment:
+      - ENVIRONMENT=production
+      - SECRET_KEY=-05sgp9!deq=q1nltm@^^2cc+v29i(tyybv3v2t77qi66czazj
+      - STRIPE_SECRET_KEY=none
+      - STRIPE_PUBLIC_KEY=none
+    ports:
+      - 8000:8000

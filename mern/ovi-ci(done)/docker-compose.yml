@@ -1,18 +1,22 @@
 services:
   web1:
-    build: .
+    build:
+      context: .
+      args:
+        - REACT_APP_CONTAINER_NAME=web1   
     environment:
       - NODE_ENV=production
-      - REACT_APP_CONTAINER_NAME=web1
     ports: 
-      - 3001:80
+      - 3001:3000
   web2:
-    build: .
+    build:
+      context: .
+      args:
+        - REACT_APP_CONTAINER_NAME=web2
     environment:
       - NODE_ENV=production
-      - REACT_APP_CONTAINER_NAME=web2
     ports: 
-      - 3002:80
+      - 3002:3000
   nginx:
     build: nginx
     ports:

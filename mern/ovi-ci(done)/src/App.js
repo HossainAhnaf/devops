@@ -7,14 +7,14 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 class App extends Component {
   render() {
     const containerName = process.env.REACT_APP_CONTAINER_NAME || 'Unknown'; // Declare inside render
-    console.log("Host URL" + process.env.PUBLIC_URL);
+    console.log("Host URL: " + containerName);
     return (
       <Router basename={process.env.PUBLIC_URL}>
         <div className="App">
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
             {/* Use curly braces for dynamic content */}
-            <h1 className="App-title">Simple React App {containerName}</h1> {/* Corrected */}
+            <h1 className="App-title">Simple React App from == {containerName}</h1> {/* Corrected */}
           </header>
           <Switch>
             <Route exact path="/" render={() => (

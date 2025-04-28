@@ -11,9 +11,10 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=true
       - NODE_ENV=development
-      - REACT_APP_LOCALHOST_KEY=chat-app-current-user
+      - LOCALHOST_KEY=chat-app-current-user
       - BACKEND_HOST=http://localhost:5000 
   backend:
+    build: ./server
     ports:
       - 5000:5000
     volumes:
@@ -24,6 +25,7 @@ services:
       - NODE_ENV=development
       - PORT=5000
       - MONGO_URL=mongodb://db:27017/chat
+      - C_NAME=two
     depends_on:
       - db
   db:

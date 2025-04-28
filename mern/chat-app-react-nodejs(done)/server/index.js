@@ -16,7 +16,7 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log("DB Connetion Successfull");
+    console.log("DB Connetion Successfull from: "+process.env.C_NAME);
   })
   .catch((err) => {
     console.log(err.message);

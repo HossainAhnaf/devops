@@ -9,13 +9,13 @@ services:
     ports:
       - 3000:3000
     depends_on:
-      - backend1
-  backend1:
+      - backend
+  backend:
     build: ./server
     expose:
       - 5000
     ports:
-      - 5001:5000
+      - 5000:5000
     environment:
       - C_NAME=one
       - PORT=5000
@@ -35,16 +35,16 @@ volumes:
   dbdata:
   
   
-backend2:
-    build: ./server
-    expose:
-      - 5000
-    ports:
-      - 5002:5000
-    environment:
-      - C_NAME=two
-      - PORT=5000
-      - MONGO_URL=mongodb://db:27017/chat
-      - NODE_ENV=production
-    depends_on:
-      - db
+# backend2:
+#     build: ./server
+#     expose:
+#       - 5000
+#     ports:
+#       - 5002:5000
+#     environment:
+#       - C_NAME=two
+#       - PORT=5000
+#       - MONGO_URL=mongodb://db:27017/chat
+#       - NODE_ENV=production
+#     depends_on:
+#       - db

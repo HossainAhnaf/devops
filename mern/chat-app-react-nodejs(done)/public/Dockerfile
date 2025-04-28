@@ -1,13 +1,30 @@
-FROM node:16-alpine
+FROM node:16-alpine AS builder
+
+ARG NODE_ENV
+ARG REACT_APP_LOCALHOST_KEY
+ARG BACKEND_HOST
+ENV NODE_ENV=$NODE_ENV
+ENV REACT_APP_LOCALHOST_KEY=$REACT_APP_LOCALHOST_KEY
+ENV BACKEND_HOST=$BACKEND_HOST
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm install --omit=dev
 
 COPY . .
 
+RUN npm run build
+
+FROM node:16-alpine
+
+WORKDIR /app
+
+COPY --from=builder /app/build ./build
+
+Run npm install -g serve
+
 EXPOSE 3000
 
-CMD ["npm","start"]
+CMD ["serve","-s","build", "-l","3000"]

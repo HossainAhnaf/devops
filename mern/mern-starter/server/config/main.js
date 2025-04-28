@@ -2,9 +2,9 @@ module.exports = {
   // Secret key for JWT signing and encryption
   secret: 'super secret passphrase',
   // Database connection information
-  database: 'mongodb://db:27017',
+  database: process.env.DB_URI ,
   // Setting port for server
-  port: 3000,
+  port: process.env.PORT,
   // Configuring Mailgun API for sending transactional email
   mailgun_priv_key: 'mailgun private key here',
   // Configuring Mailgun domain for sending transactional email

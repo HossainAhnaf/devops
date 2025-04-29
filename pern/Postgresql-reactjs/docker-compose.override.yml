@@ -9,7 +9,7 @@ services:
     environment:
       NODE_ENV: development
       CHOKIDAR_USEPOLLING: true
-      API: http://localhost:5000
+      VITE_API: http://localhost:5000
       VITE_PORT: 3000
     ports:
       - 3000:3000

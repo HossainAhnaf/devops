@@ -2,13 +2,15 @@
 import {useState, useEffect} from 'react';
 function App() {
   const [merchants, setMerchants] = useState(false);
-  const api = process.env.API
+  const api = import.meta.env.VITE_API
   function getMerchant() {
     fetch(api)
       .then(response => {
         return response.text();
       })
       .then(data => {
+        console.log(data);
+        
         setMerchants(data);
       });
   }

@@ -16,7 +16,7 @@ class App extends Config {
   constructor() {
     super();
     this.app = express();
-    this.port = this.getNumberEnv('PORT') ?? 3001;
+    this.port = this.getNumberEnv('PORT') ?? 5000;
 
     container.resolve<AppModule>(AppModule);
     this.initializeMiddlewares();

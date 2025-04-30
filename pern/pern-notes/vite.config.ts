@@ -10,4 +10,8 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src/client'),
     },
   },
+  server: {
+    port: 3000, // 👈 Set frontend dev server port here
+    host: true
+  },
 });

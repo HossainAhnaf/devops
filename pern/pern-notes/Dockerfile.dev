@@ -23,6 +23,8 @@ RUN pnpm add node-pre-gyp
 
 RUN pnpm dlx node-pre-gyp install --fallback-to-build
 
+WORKDIR /app
+
 # Expose necessary ports
 EXPOSE 3000 5000
 

@@ -7,7 +7,7 @@
     "lint": "eslint --fix src/**/*.ts",
     "format": "prettier --write .",
     "dev": "nodemon src/server/server.ts -w src/server",
-    "client":"vite src/client",
+    "client":"vite",
     "dev:all": "concurrently \"pnpm dev\" \"pnpm client\"",
     "start": "npm run build && NODE_ENV=production ts-node src/server/server.ts",
     "build": "vite build",

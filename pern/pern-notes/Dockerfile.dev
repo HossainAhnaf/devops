@@ -17,6 +17,12 @@ RUN npm install -g pnpm && pnpm install
 # Copy the rest of the application code
 COPY . .
 
+WORKDIR /app/node_modules/bcrypt
+
+RUN pnpm add node-pre-gyp
+
+RUN pnpm dlx node-pre-gyp install --fallback-to-build
+
 # Expose necessary ports
 EXPOSE 3000 5000
 

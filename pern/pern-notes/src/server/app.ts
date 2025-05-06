@@ -29,31 +29,17 @@ class App extends Config {
     });
   }
 
-  private initializeMiddlewares(): void {
-    const allowedOrigins = [
-      'http://localhost:3000',
-      'http://localhost:5000',
-      // Add your current Docker host dynamically if needed
-      'http://ip172-18-0-21-d0c3qm8l2o9000fgd1k0-3000.direct.labs.play-with-docker.com',
-      'http://ip172-18-0-21-d0c3qm8l2o9000fgd1k0-5000.direct.labs.play-with-docker.com',
-    ];
+private initializeMiddlewares(): void {
+  this.app.use(cors({
+    origin: true, // Reflects the request origin automatically
+    credentials: true,
+  }));
 
-    this.app.use(cors({
-      origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin)) {
-          callback(null, true);
-        } else {
-          callback(new Error('Not allowed by CORS'));
-        }
-      },
-      credentials: true
-    }));
-
-    this.app.use(morgan('dev'));
-    this.app.use(express.json());
-    this.app.use(cookieParser());
-    this.app.use(express.urlencoded({ extended: true }));
-  }
+  this.app.use(morgan('dev'));
+  this.app.use(express.json());
+  this.app.use(cookieParser());
+  this.app.use(express.urlencoded({ extended: true }));
+}
 
   private initializeRoutes(): void {
     const authRouter = container.resolve<Router>('AuthRoute');

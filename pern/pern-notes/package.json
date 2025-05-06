@@ -6,9 +6,9 @@
   "scripts": {
     "lint": "eslint --fix src/**/*.ts",
     "format": "prettier --write .",
-    "dev": "nodemon src/server/server.ts -w src/server",
-    "client":"vite",
-    "dev:all": "concurrently \"pnpm dev\" \"pnpm client\"",
+    "back:dev": "nodemon src/server/server.ts -w src/server",
+    "front:dev":"vite dev",
+    "dev:all": "concurrently \"pnpm back:dev\" \"pnpm front:dev\"",
     "start": "npm run build && NODE_ENV=production ts-node src/server/server.ts",
     "build": "vite build",
     "db:drop": "drizzle-kit drop",

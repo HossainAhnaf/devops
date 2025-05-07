@@ -54,7 +54,7 @@ export const useAuthStore = create<State & Actions>((set) => ({
         withCredentials: true,
       });
 
-      return res;
+      return res; 
     } catch (err) {
       console.error(err);
     }

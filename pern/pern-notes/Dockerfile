@@ -1,0 +1,43 @@
+FROM node:20-slim AS builder
+
+# Install necessary build tools and Python for node-gyp
+RUN apt-get update && apt-get install -y \
+    python3 \
+    make \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files and install dependencies
+COPY package*.json pnpm-lock.yaml ./
+RUN npm install -g pnpm && pnpm install
+
+# Copy the rest of the application code
+COPY . .
+
+WORKDIR /app/node_modules/bcrypt
+
+RUN pnpm add node-pre-gyp
+
+RUN pnpm dlx node-pre-gyp install --fallback-to-build
+
+RUN pnpm run db:migrate
+
+RUN pnpm run build
+
+FROM nginx:1.25.4-alpine-slim
+
+WORKDIR /app
+
+COPY --from=builder /app/dist /usr/share/nginx/html  
+
+COPY . .
+# Add step to run migrations
+
+# Expose necessary ports
+EXPOSE 80 5000
+
+# Start the application
+CMD ["pnpm", "dev:all"]

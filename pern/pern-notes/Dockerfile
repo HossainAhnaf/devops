@@ -23,21 +23,21 @@ RUN pnpm add node-pre-gyp
 
 RUN pnpm dlx node-pre-gyp install --fallback-to-build
 
+WORKDIR /app
+# Add step to run migrations
 RUN pnpm run db:migrate
 
 RUN pnpm run build
 
-FROM nginx:1.25.4-alpine-slim
+
+FROM node:20-slim
 
 WORKDIR /app
 
-COPY --from=builder /app/dist /usr/share/nginx/html  
+RUN npm install -g pnpm && pnpm add -g serve
 
-COPY . .
-# Add step to run migrations
+COPY --from=builder . .
 
-# Expose necessary ports
-EXPOSE 80 5000
+EXPOSE 3000 5000
 
-# Start the application
-CMD ["pnpm", "dev:all"]
+CMD ["pnpm", "prod:all"]

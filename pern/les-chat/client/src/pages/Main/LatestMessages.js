@@ -39,7 +39,7 @@ const LatestMessages = () => {
   if (loadingUsers || loadingGroups || loadingGlobal || !userData) {
     return <LoadingSpinner />;
   }
-
+   
   return (
     <div className={classes.root}>
       <div className={classes.list}>
@@ -58,8 +58,10 @@ const LatestMessages = () => {
                 <LanguageIcon color="primary" />
               </Avatar>
             </ListItemAvatar>
+            {globalData.getGlobalGroup &&
             <LatestMessage body={globalData.getGlobalGroup} />
-          </ListItem>
+            }
+            </ListItem>
         )}
         <Divider />
         {groupData &&

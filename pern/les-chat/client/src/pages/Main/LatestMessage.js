@@ -5,7 +5,7 @@ import { truncateString } from '../../utils/helperFuncs';
 
 const LatestMessage = ({ body, type }) => {
   const classes = useChatListStyles();
-
+  
   return (
     <div className={classes.chatInfo}>
       <div className={classes.nameAndDate}>

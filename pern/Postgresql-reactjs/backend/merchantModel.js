@@ -7,6 +7,15 @@ const pool = new Pool({
   port: process.env.DB_PORT,       // 5432
 });
 
+// Attempt to connect and log result
+pool.connect((err, client, release) => {
+  if (err) {
+    console.error("Database connection error:", err.stack);
+  } else {
+    console.log("Database connected successfully");
+    release(); // release the client back to the pool
+  }
+});
 
 //get all merchants our database
 const getMerchants = async () => {

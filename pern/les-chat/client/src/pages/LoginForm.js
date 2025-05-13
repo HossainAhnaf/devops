@@ -47,6 +47,8 @@ const LoginForm = () => {
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     onError: (err) => {
       setErrorMsg(getErrorMsg(err));
+      console.log(err);
+      
     },
   });
 

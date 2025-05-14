@@ -5,18 +5,24 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
- 
-# Install dependencies
 COPY requirements.txt .
 
-RUN pip install --upgrade pip --no-cache-dir && \
-    pip install --no-cache-dir -r requirements.txt
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    gcc \
+    libpq-dev \
+    postgresql-client \
+    libjpeg-dev \
+    zlib1g-dev \
+    libffi-dev \
+    && pip install --upgrade pip \
+    && pip install --no-cache-dir gunicorn -r requirements.txt \
+    && apt-get purge -y --auto-remove build-essential gcc \
+    && rm -rf /var/lib/apt/lists/*
 
+COPY . .
+
+# ---------------------------------------
 
 FROM python:3.8-slim
 
@@ -27,13 +33,18 @@ RUN adduser --disabled-password --gecos "" django_user
 
 WORKDIR /app
 
-COPY --from=build /usr/local/lib/python3.8/site-packages /usr/local/lib/python3.8/site-packages
+# ✅ Correct: Copy built Python environment
+COPY --from=build /usr/local /usr/local
 
+# ✅ Then copy application code
 COPY --from=build /app /app
 
 RUN chown -R django_user:django_user /app
 
 USER django_user
+
+# Collect static files
+RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
 

@@ -5,7 +5,12 @@ services:
       dockerfile: Dockerfile.dev
     environment:
       - DJANGO_ENV=development
-     ports:
+      - SECRET_KEY=${SECRET_KEY}
+      - SECRET_ADMIN_URL=${SECRET_ADMIN_URL}
+      - HCAPTCHA_SITEKEY=${HCAPTCHA_SITEKEY}
+      - HCAPTCHA_SECRET=${HCAPTCHA_SECRET}
+    ports:
       - 8000:8000
     volumes:
       - ./:/app
+    command: python manage.py runserver 0.0.0.0:8000

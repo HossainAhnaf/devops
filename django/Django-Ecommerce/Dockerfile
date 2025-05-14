@@ -1,7 +1,18 @@
 FROM python:3.8-slim AS build
 
+ARG ENVIRONMENT=production
+ARG SECRET_KEY=-05sgp9!deq=q1nltm@^^2cc+v29i(tyybv3v2t77qi66czazj
+ARG STRIPE_SECRET_KEY=none
+ARG STRIPE_PUBLIC_KEY=none
+ARG SECURE_SSL_REDIRECT=False
+
 ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
+    PYTHONUNBUFFERED=1 \
+    ENVIRONMENT=${ENVIRONMENT} \
+    SECRET_KEY=${SECRET_KEY} \
+    STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY} \
+    STRIPE_PUBLIC_KEY=${STRIPE_PUBLIC_KEY} \
+    SECURE_SSL_REDIRECT=${SECURE_SSL_REDIRECT}
 
 WORKDIR /app
 
@@ -21,6 +32,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 COPY . .
+
+
+# Collect static files
+# RUN python manage.py collectstatic --noinput
 
 # ---------------------------------------
 
@@ -43,8 +58,6 @@ RUN chown -R django_user:django_user /app
 
 USER django_user
 
-# Collect static files
-RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
 

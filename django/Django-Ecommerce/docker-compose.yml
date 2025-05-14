@@ -1,12 +1,14 @@
 services:
   web:
-    build: .
+    build: 
+      args:
+        - ENVIRONMENT=production
+        - SECRET_KEY=-05sgp9!deq=q1nltm@^^2cc+v29i(tyybv3v2t77qi66czazj
+        - STRIPE_SECRET_KEY=none
+        - STRIPE_PUBLIC_KEY=none
+        - SECURE_SSL_REDIRECT=False
+      context: .
     environment:
-      - ENVIRONMENT=production
-      - SECRET_KEY=-05sgp9!deq=q1nltm@^^2cc+v29i(tyybv3v2t77qi66czazj
-      - STRIPE_SECRET_KEY=none
-      - STRIPE_PUBLIC_KEY=none
-      - SECURE_SSL_REDIRECT=False
-
+      - SECRET_KEY=real_secret  
     ports:
       - 8000:8000

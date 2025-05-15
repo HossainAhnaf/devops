@@ -2,36 +2,20 @@ FROM python:3.10-slim AS build
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 
-    
+
 WORKDIR /app
 
-# Install system dependencies
+COPY requirements.txt . 
+
+# Install system dep + dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
     libpq-dev \
-    libssl-dev \
-    libffi-dev \
-    curl \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-
-# Install  dependencies
-COPY requirement.txt . 
-
-RUN pip install --upgrade pip --no-cache-dir && \
-    pip install --no-cache-dir -r requirement.txt
-
-
-FROM python:3.10-slim
-
-ENV PYTHONUNBUFFERED=1 \
-    PYTHONDONTWRITEBYTECODE=1 
-
-WORKDIR /app
-  
-COPY --from=build /usr/local/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
-
-COPY --from=build /app /app
+    build-essential \
+    && rm -rf /var/lib/apt/lists/* \  
+    && pip install --upgrade pip \
+    && pip install --no-cache-dir -r requirements.txt
+    
+COPY . .
 
 RUN adduser --disabled-password --gecos "" django_user 
 
@@ -41,4 +25,4 @@ USER django_user
 
 EXPOSE 8000
 
-CMD ["daphne","-b","0.0.0.0","-p","8000","PrivatePing.asgi:application"]
+ENTRYPOINT ["/bin/bash","/app/entrypoint.sh"]

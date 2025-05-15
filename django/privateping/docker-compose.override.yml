@@ -5,10 +5,10 @@ services:
       dockerfile: Dockerfile.dev
     environment:
       - DJANGO_ENV=development
-      - SECRET_KEY=${SECRET_KEY}
-      - SECRET_ADMIN_URL=${SECRET_ADMIN_URL}
-      - HCAPTCHA_SITEKEY=${HCAPTCHA_SITEKEY}
-      - HCAPTCHA_SECRET=${HCAPTCHA_SECRET}
+      - SECRET_KEY=your-very-secret-key
+      - SECRET_ADMIN_URL=admin/secret/
+      - HCAPTCHA_SITEKEY=your-hcaptcha-sitekey
+      - HCAPTCHA_SECRET=your-hcaptcha-secret
     ports:
       - 8000:8000
     volumes:

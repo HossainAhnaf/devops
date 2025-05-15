@@ -1,7 +1,19 @@
 services:
   web:
-    build: .
-    environment:
-      - DJANGO_ENV=production
+    build: 
+      args:
+        DJANGO_ENV: production
+        SECRET_KEY: your-very-secret-key
+        SECRET_ADMIN_URL: admin/secret/
+        HCAPTCHA_SITEKEY: your-hcaptcha-sitekey
+        HCAPTCHA_SECRET: your-hcaptcha-secret
+      context: .
     ports:
       - 8000:8000
+    environment:
+      - DJANGO_ENV=production
+      - SECRET_KEY=your-very-secret-key
+      - SECRET_ADMIN_URL=admin/secret/
+      - HCAPTCHA_SITEKEY=your-hcaptcha-sitekey
+      - HCAPTCHA_SECRET=your-hcaptcha-secret 
+    command: daphne -b 0.0.0.0 -p 8000 PrivatePing.asgi:application 

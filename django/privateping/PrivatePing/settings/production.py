@@ -6,10 +6,10 @@ import django_heroku
 
 django_heroku.settings(locals())
 
-DEBUG = False
+DEBUG = True
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'http')
 ALLOWED_HOSTS = ['*']
 SECRET_ADMIN_URL = os.environ.get('SECRET_ADMIN_URL')
 
@@ -19,12 +19,12 @@ HCAPTCHA_SECRET = os.environ.get('HCAPTCHA_SECRET')
 
 #security config
 SECURE_HSTS_SECONDS = 60
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_HSTS_PRELOAD = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+SECURE_SSL_REDIRECT = False
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+SECURE_BROWSER_XSS_FILTER = False
+SECURE_HSTS_PRELOAD = False
 
 #sentry config
 SENTRY_DSN = os.environ.get('SENTRY_DSN')
@@ -45,14 +45,19 @@ CHANNEL_LAYERS = {
 }
 
 #database config
-DATABASES = {}
-DATABASES['default'] = dj_database_url.config(conn_max_age=600)
-DATABASES['default']['CONN_MAX_AGE'] = 60
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default='sqlite:///db.sqlite3',
+        conn_max_age=600
+    )
+}
+
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 STATICFILES_DIRS = [
-    BASE_DIR / '../assets/static'
+    BASE_DIR / '../../assets'
 ]
 STATIC_ROOT = BASE_DIR / '../assets/'
 

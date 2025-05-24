@@ -1,5 +1,7 @@
 FROM python:3.10-slim AS build
 
+ARG DJANGO_ENV=production
+
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 
 
@@ -17,6 +19,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     
 COPY . .
 
+# Collect static files
+RUN python manage.py collectstatic --noinput
+
+FROM python:3.10-slim 
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 
+
+WORKDIR /app
 RUN adduser --disabled-password --gecos "" django_user 
 
 RUN chown -R django_user:django_user /app

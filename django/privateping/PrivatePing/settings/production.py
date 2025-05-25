@@ -48,7 +48,7 @@ CHANNEL_LAYERS = {
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='sqlite:///db.sqlite3',
+        default=os.environ.get('DATABASE_URL'),
         conn_max_age=600
     )
 }
@@ -63,4 +63,4 @@ STATIC_ROOT = BASE_DIR / '../assets/'
 
 DISABLE_SERVER_SIDE_CURSORS = True
 
-DOMAIN = "https://privateping.apps.princekhunt.com"
+DOMAIN = "http://localhost:8000"

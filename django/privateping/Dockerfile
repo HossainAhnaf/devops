@@ -22,6 +22,7 @@ COPY requirements.txt .
 # Install system dep + dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq-dev \
+    gcc \
     build-essential \
     && rm -rf /var/lib/apt/lists/* \  
     && pip install --upgrade pip \
@@ -39,10 +40,13 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /app
 
-# ✅ Correct: Copy built Python environment
+#  Copy built Python environment
 COPY --from=build /usr/local /usr/local
 
-# ✅ Then copy application code
+#  Copy built Python libraries
+COPY --from=build /usr/lib /usr/lib
+
+#  copy application code
 COPY --from=build /app /app
 
 RUN adduser --disabled-password --gecos "" django_user 
